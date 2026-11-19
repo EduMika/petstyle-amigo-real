@@ -1,0 +1,28 @@
+const API_URL = 'http://localhost:3001/productos';
+
+const FALLBACK_PRODUCTOS = [
+  { id: 1, nombre: "Abrigo Polar Nórdico", categoria: "Ropa", especie: "Perro", talla: "M", precio: 65.0, stock: 14, imagen: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500&auto=format&fit=crop&q=60", descripcion: "Abrigo térmico con interior de felpa suave ideal para paseos en días fríos." },
+  { id: 2, nombre: "Polera Hoodie Urbana", categoria: "Ropa", especie: "Perro", talla: "S", precio: 48.0, stock: 20, imagen: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=500&auto=format&fit=crop&q=60", descripcion: "Sudadera de algodón transpirable con capucha ajustable y bolsillo trasero." },
+  { id: 3, nombre: "Collar Cuero Vegano & Placa", categoria: "Accesorios", especie: "Perro", talla: "L", precio: 39.9, stock: 18, imagen: "https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=500&auto=format&fit=crop&q=60", descripcion: "Collar resistente con hebilla metálica dorada y placa grabable." },
+  { id: 4, nombre: "Bandana Boho Andina", categoria: "Accesorios", especie: "Gato", talla: "Única", precio: 22.0, stock: 30, imagen: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60", descripcion: "Pañuelo ligero de algodón hipoalergénico con cierre de broche seguro." },
+  { id: 5, nombre: "Botines Impermeables Trekking", categoria: "Calzado", especie: "Perro", talla: "M", precio: 55.0, stock: 9, imagen: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500&auto=format&fit=crop&q=60", descripcion: "Set de 4 botines antideslizantes resistentes al agua y pavimento caliente." },
+  { id: 6, nombre: "Suéter Tejido Alpaca Soft", categoria: "Ropa", especie: "Gato", talla: "S", precio: 59.0, stock: 11, imagen: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=500&auto=format&fit=crop&q=60", descripcion: "Chompa tejida de punto fino que mantiene el calor sin limitar el movimiento." },
+  { id: 7, nombre: "Arnés Pechera Ergonómico", categoria: "Accesorios", especie: "Perro", talla: "M", precio: 68.0, stock: 15, imagen: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500&auto=format&fit=crop&q=60", descripcion: "Arnés acolchado antitirones con cintas reflectantes nocturnas." },
+  { id: 8, nombre: "Impermeable Chubasquero Yellow", categoria: "Ropa", especie: "Perro", talla: "L", precio: 72.0, stock: 7, imagen: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500&auto=format&fit=crop&q=60", descripcion: "Capa impermeable con visor transparente y ajuste rápido en pecho." },
+  { id: 9, nombre: "Corbatín Gala Terciopelo", categoria: "Accesorios", especie: "Gato", talla: "Única", precio: 25.0, stock: 25, imagen: "https://images.unsplash.com/photo-1513245543132-31f507417b26?w=500&auto=format&fit=crop&q=60", descripcion: "Accesorio elegante desmontable para sesiones de fotos y celebraciones." },
+  { id: 10, nombre: "Medias Antideslizantes Indoor", categoria: "Calzado", especie: "Perro", talla: "S", precio: 28.5, stock: 22, imagen: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=500&auto=format&fit=crop&q=60", descripcion: "Calcetines de algodón elástico con suela de silicona para pisos lisos." }
+];
+
+export async function obtenerProductos() {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error('Error al consultar la API');
+    }
+    const data = await response.json();
+    return { data, desdeRespaldo: false };
+  } catch (error) {
+    console.warn('JSON Server no activo, cargando catálogo de respaldo:', error);
+    return { data: FALLBACK_PRODUCTOS, desdeRespaldo: true };
+  }
+}
